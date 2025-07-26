@@ -1,0 +1,76 @@
+import plotly.graph_objects as go
+import plotly.io as pio
+
+nodes = [
+    "Associated with plant",  # 0
+    "Remaining in solution",  # 1
+    "Root",                   # 2
+    "Stem",                   # 3
+    "Leaf",                   # 4
+    "Internal pathways",      # 5
+    "Surface transport",      # 6
+    "Particle and ionic state", # 7
+    "Ionic state",            # 8
+    "Particle state"          # 9
+]
+
+sources = [0, 0, 0, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6]
+targets = [2, 3, 4, 7, 8, 9, 5, 6, 8, 8, 9, 8, 9]
+values = [
+    31.24055, 2.49155, 0.00202, 44.03974,
+    2.56351, 28.67704, 0.22424, 2.26731,
+    0.00202, 0.10012, 0.12412, 0.18527, 2.08204
+]
+
+node_colors = [
+    "rgba(171, 171, 171, 0.6)", "rgba(171, 171, 171, 0.6)",
+    "rgba(158, 119, 110, 0.6)", "rgba(154, 200, 82, 0.6)", "rgba(101, 147, 196, 0.6)",
+    "rgba(143, 29, 0, 0.6)", "rgba(196, 40, 0, 0.6)",
+    "rgba(0,0,0,0)",
+    "rgba(35, 101, 171, 0.6)", "rgba(61, 166, 219, 0.6)"
+]
+
+link_colors = [
+    "rgba(158, 119, 110, 0.3)", "rgba(154, 200, 82, 0.3)", "rgba(101, 147, 196, 0.3)",
+    "rgba(0,0,0,0)",
+    "rgba(35, 101, 171, 0.3)", "rgba(61, 166, 219, 0.3)",
+    "rgba(143, 29, 0, 0.3)", "rgba(196, 40, 0, 0.3)",
+    "rgba(35, 101, 171, 0.3)",
+    "rgba(35, 101, 171, 0.3)", "rgba(61, 166, 219, 0.3)",
+    "rgba(35, 101, 171, 0.3)", "rgba(61, 166, 219, 0.3)"
+]
+
+fig = go.Figure(go.Sankey(
+    arrangement="snap",
+    node=dict(
+        pad=15,
+        thickness=20,
+        line=dict(color="black", width=0),
+        label=[],
+        color=node_colors,
+        x=[0, 0, 0.33, 0.33, 0.33, 0.66, 0.66, 1, 1, 1],
+        y=[0.2, 0.8, 0.9, 0.5, 0.1, 0.7, 0.3, 0.8, 0.5, 0.2]
+    ),
+    link=dict(
+        source=sources,
+        target=targets,
+        value=values,
+        color=link_colors,
+        hovercolor="rgba(255,255,255,0.5)",
+        line=dict(width=0)
+    )
+))
+
+fig.update_layout(
+    title_text="",
+    font_size=12,
+    width=4500,
+    height=1500,
+    margin=dict(l=20, r=20, t=20, b=20),
+    plot_bgcolor="rgba(255,255,255,0)",
+    paper_bgcolor="rgba(255,255,255,0)",
+    dragmode='pan',
+)
+
+fig.show()
+
